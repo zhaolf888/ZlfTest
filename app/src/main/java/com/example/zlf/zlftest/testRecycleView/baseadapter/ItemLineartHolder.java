@@ -7,16 +7,24 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.zlf.zlftest.R;
 import com.example.zlf.zlftest.testRecycleView.TestBean;
+import com.example.zlf.zlftest.testRecycleView.decoration.DecorationBuilder;
+import com.example.zlf.zlftest.testRecycleView.decoration.GridDecoration;
+import com.example.zlf.zlftest.testRecycleView.decoration.RecycleDecoration;
+import com.example.zlf.zlftest.testRecycleView.itemInfoBean;
+import com.zlf.zlfutils.DisplayUtil;
 
 
 import java.util.ArrayList;
@@ -29,14 +37,14 @@ import java.util.Map;
  */
 
 public abstract class ItemLineartHolder extends RecyclerView.ViewHolder
-        implements View.OnClickListener, CurrencyRecyclerAdapter.RViewAdapter<TestBean, MultiViewHolder> {
+        implements View.OnClickListener, CurrencyRecyclerAdapter.RViewAdapter<itemInfoBean, MultiViewHolder> {
     protected final static int TYPE_RIGHT_IMG = 150000; //左文右图
     protected final static int TYPE_UP_IMG = 150001; //上图下文
 
 
     public Context mContext;
     protected TestBean bean;
-    protected List<String> mBeanList;
+    protected List<itemInfoBean> mBeanList;
 
     public View title_line;
     public RelativeLayout rl_title;
@@ -49,8 +57,8 @@ public abstract class ItemLineartHolder extends RecyclerView.ViewHolder
     public View line1;
     public LayoutInflater mLayoutInflater;
     public ImageView ivTitleTop;
-//    private ItemViewType mItemViewType;
-    public CurrencyRecyclerAdapter<TestBean, MultiViewHolder> mRecyclerAdapter;
+    //    private ItemViewType mItemViewType;
+    public CurrencyRecyclerAdapter<itemInfoBean, MultiViewHolder> mRecyclerAdapter;
     private Map<String, String> mNameMap;
 
     public ItemLineartHolder(View itemView) {
@@ -64,7 +72,7 @@ public abstract class ItemLineartHolder extends RecyclerView.ViewHolder
     }
 
     public void onRefresh(TestBean bean) {
-        this.bean=bean;
+        this.bean = bean;
         testingTitle();
         this.mBeanList.clear();
         this.mBeanList.addAll(bean.getList());
@@ -84,18 +92,18 @@ public abstract class ItemLineartHolder extends RecyclerView.ViewHolder
         line = v.findViewById(R.id.line);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview_layoutId);
         line1 = v.findViewById(R.id.line1);
-        ivTitleTop= (ImageView) v.findViewById(R.id.iv_title_top);
+        ivTitleTop = (ImageView) v.findViewById(R.id.iv_title_top);
         mBeanList = new ArrayList<>();
-        mRecyclerAdapter = new CurrencyRecyclerAdapter<>(mContext, mBeanList, -1, this);
+        mRecyclerAdapter = new CurrencyRecyclerAdapter<itemInfoBean, MultiViewHolder>(mContext, mBeanList, this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext,getColumnCount());
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, getColumnCount());
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
         RecycleDecoration builder = DecorationBuilder.Builder(new GridDecoration())
                 .setOrientation(RecycleDecoration.VERTICAL_CROSS)
                 .setContext(mContext)
-                .setDividerColor(R.color.light_dark_gray)
+                .setDividerColor(android.R.color.holo_blue_dark)
                 .setDividerWidth(1)
                 .builder();
         mRecyclerView.addItemDecoration(builder);
@@ -109,36 +117,30 @@ public abstract class ItemLineartHolder extends RecyclerView.ViewHolder
         });
         return v;
     }
-    public int getColumnCount(){
+
+    public int getColumnCount() {
         return 4;
     }
+
     public void testingTitle() {
         if (null != bean && !TextUtils.isEmpty(bean.imgUrl)) {
             iv_title.setVisibility(View.VISIBLE);
             ViewGroup.LayoutParams layoutParams = iv_title
                     .getLayoutParams();
-            layoutParams.width = SystemUtil.getScreenWidth(mContext);
+            layoutParams.width = DisplayUtil.getScreenWidth(mContext);
             layoutParams.height = (int) (layoutParams.width * 120 / 750);// 设置幻灯片的宽高比例
             iv_title.setLayoutParams(layoutParams);
             Glide.with(mContext)
                     .load("")
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .centerCrop()
-                    .placeholder(ContextCompat.getDrawable(mContext, R.drawable.defalut_banner))
+                    .placeholder(ContextCompat.getDrawable(mContext, R.drawable.picdefault))
                     .into(iv_title);
             if (!TextUtils.isEmpty(bean.status) && "1".equals(bean.status)) {
                 iv_title.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(mContext, WebPageActivity.class);
-                        intent.putExtra("startUrl", "file:///android_asset/widget/html/goodsDeta_win.html");
-                        intent.putExtra("serviceUrl", StartApp.JAVA_BASE_TO_SERVICE);
-                        intent.putExtra("goodsId", bean.goodsId);
-                        intent.putExtra("goodsName", bean.imgUrl);//广告这里没有orderSource
-//                        if (!TextUtils.isEmpty(bean.orderSource)) {
-//                            intent.putExtra("orderSource", bean.orderSource);
-//                        }
-                        mContext.startActivity(intent);
+                        Toast.makeText(mContext, bean.itemName, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -183,49 +185,51 @@ public abstract class ItemLineartHolder extends RecyclerView.ViewHolder
         }
         return holder;
     }
+
     //包装onBindViewHolder
     @Override
     public void onBindViewHolder(MultiViewHolder holder, int position, itemInfoBean itemInfoBean) {
         switch (getItemViewType(position, itemInfoBean)) {
             //新版本布局
             case TYPE_RIGHT_IMG: //左右布局比上下布局多了一个规格显示
-                TextView tvSpecName= (TextView) holder.itemView.findViewById(R.id.tv_specName);
-                tvSpecName.setText(itemInfoBean.defaultSpecName);
-                if(tvSpecName.getText().length()>0){
+                TextView tvSpecName = (TextView) holder.itemView.findViewById(R.id.tv_specName);
+                tvSpecName.setText(itemInfoBean.itemName);
+                if (tvSpecName.getText().length() > 0) {
                     tvSpecName.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     tvSpecName.setVisibility(View.GONE);
                 }
             case TYPE_UP_IMG:
                 ImageView iv = (ImageView) holder.itemView.findViewById(R.id.iv_img);
 
                 Glide.with(mContext)
-                        .load(AddressManagement.getPicturesPath(itemInfoBean.goodsImg))
+                        .load(itemInfoBean.imgUrl)
+                        .error(R.drawable.picdefault)
                         .centerCrop()
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .into(iv);
 
-                if("1".equals(itemInfoBean.isConsumer)){
+                if ("1".equals(itemInfoBean.itemName)) {
                     holder.itemView.findViewById(R.id.iv_coucon_state).setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     holder.itemView.findViewById(R.id.iv_coucon_state).setVisibility(View.GONE);
                 }
                 TextView tvName = (TextView) holder.itemView.findViewById(R.id.tv_name);
 
-                tvName.setText(itemInfoBean.goodsName);
-                if(tvName.getText().length()>0){
+                tvName.setText(itemInfoBean.itemName);
+                if (tvName.getText().length() > 0) {
                     tvName.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     tvName.setVisibility(View.GONE);
                 }
                 TextView tvPrice = (TextView) holder.itemView.findViewById(R.id.tv_price);
 
-                if(TextUtils.isEmpty(itemInfoBean.goodsPrice)){
+                if (TextUtils.isEmpty(itemInfoBean.itemName)) {
                     tvPrice.setVisibility(View.GONE);
-                }else{
+                } else {
                     tvPrice.setVisibility(View.VISIBLE);
                 }
-                tvPrice.setText("¥"+ EaseCommonUtils.subZeroAndDot(itemInfoBean.goodsPrice) /*+ "/" + itemInfoBean.goodsUnit*/);
+                tvPrice.setText("¥" + itemInfoBean.itemName /*+ "/" + itemInfoBean.goodsUnit*/);
 
                 holder.itemView.setOnClickListener(new onItemClick(position, itemInfoBean));
                 break;
@@ -234,15 +238,7 @@ public abstract class ItemLineartHolder extends RecyclerView.ViewHolder
 
     //统一处理RecyclerView的Item点击事件,如有不同可重写
     public void onItemClick(View v, int position, itemInfoBean bean) {
-        Intent intent = new Intent(mContext, WebPageActivity.class);
-        intent.putExtra("startUrl", "file:///android_asset/widget/html/goodsDeta_win.html");
-        intent.putExtra("serviceUrl", StartApp.JAVA_BASE_TO_SERVICE);
-        intent.putExtra("goodsId", bean.goodsId);
-        intent.putExtra("goodsName", bean.goodsName);
-        if (!TextUtils.isEmpty(bean.orderSource)) {
-            intent.putExtra("orderSource", bean.orderSource);
-        }
-        mContext.startActivity(intent);
+        Toast.makeText(mContext, "position=="+position, Toast.LENGTH_SHORT).show();
     }
 
     //自定义点击事件
@@ -267,16 +263,7 @@ public abstract class ItemLineartHolder extends RecyclerView.ViewHolder
         mNameMap.put("1", "时令抢鲜");
         mNameMap.put("2", "新品预售");
         mNameMap.put("3", "限时抢购");
-        mNameMap.put("4", "特色推荐");
-        mNameMap.put("12", "特色馆");
-        mNameMap.put("5", "人气热销");
-        mNameMap.put("6", "调味首选");
-        mNameMap.put("11", "特色酱菜");
-        mNameMap.put("7", "绿色果蔬");
-        mNameMap.put("8", "精品干货");
-        mNameMap.put("9", "原生态土特产");
-        mNameMap.put("10", "名优小吃");
-        mNameMap.put("13", "区县特产馆");
+
     }
 
     private String getDefaultName(String itemId) {

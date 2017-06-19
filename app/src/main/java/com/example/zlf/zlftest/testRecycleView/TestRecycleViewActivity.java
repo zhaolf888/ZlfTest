@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ public class TestRecycleViewActivity extends Activity implements PtrHandler2{
     RecyclerView rvRecyclerview;
     PtrClassicFrameLayout refreshLayout;
     TestAdapter adapter;
-    List<String> lisdataString = new ArrayList<>();
+    List<itemInfoBean> lisdataString = new ArrayList<>();
     List<TestBean> lisdata = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,45 +46,48 @@ public class TestRecycleViewActivity extends Activity implements PtrHandler2{
         refreshLayout.setPtrHandler(this);
 
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(rvRecyclerview.getContext(), 4, GridLayoutManager.VERTICAL, false);
-        rvRecyclerview.setLayoutManager(gridLayoutManager);
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(rvRecyclerview.getContext(), 4, GridLayoutManager.VERTICAL, false);
+//        rvRecyclerview.setLayoutManager(gridLayoutManager);
 
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
+        rvRecyclerview.setLayoutManager(gridLayoutManager);
 
 
         TestBean testBean = new TestBean();
         testBean.setType(1);
-        lisdataString.add("测试1");
-        lisdataString.add("测试2");
-        lisdataString.add("测试3");
-        lisdataString.add("测试4");
-        lisdataString.add("测试5");
-        lisdataString.add("测试6");
-        lisdataString.add("测试7");
-        lisdataString.add("测试8");
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
         testBean.setList(lisdataString);
         lisdata.add(testBean);
         testBean = new TestBean();
         testBean.setType(2);
-        lisdataString.add("测试11");
-        lisdataString.add("测试22");
-        lisdataString.add("测试33");
-        lisdataString.add("测试44");
-        lisdataString.add("测试55");
-        lisdataString.add("测试66");
-        lisdataString.add("测试77");
-        lisdataString.add("测试88");
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
         testBean.setList(lisdataString);
         lisdata.add(testBean);
         testBean = new TestBean();
         testBean.setType(3);
-        lisdataString.add("测试111");
-        lisdataString.add("测试222");
-        lisdataString.add("测试333");
-        lisdataString.add("测试444");
-        lisdataString.add("测试555");
-        lisdataString.add("测试666");
-        lisdataString.add("测试777");
-        lisdataString.add("测试888");
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
+        lisdataString.add(new itemInfoBean());
         testBean.setList(lisdataString);
         lisdata.add(testBean);
         LayoutInflater lif = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -92,8 +96,7 @@ public class TestRecycleViewActivity extends Activity implements PtrHandler2{
         hashMap.put(TestAdapter.TYPE2, R.layout.recyclerview_layout);
         hashMap.put(TestAdapter.TYPE3, R.layout.recyclerview_layout);
         adapter = new TestAdapter(context,hashMap,lisdata);
-
-
+        rvRecyclerview.setAdapter(adapter);
 
 
 

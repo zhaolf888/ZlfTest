@@ -29,6 +29,9 @@
         <activity android:name=".TabLayout_Activity"/>
         <activity android:name=".AppBarLayout_Activity"/>
         <activity android:name=".CollapsingToobarActivity"/>
+        <activity android:name=".testRecycleView.TestRecycleViewActivity"/>
+
+
     </application>
 
 </manifest>

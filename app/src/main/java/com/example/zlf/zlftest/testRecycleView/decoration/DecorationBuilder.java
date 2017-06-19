@@ -143,7 +143,7 @@ public class DecorationBuilder {
         return this;
     }
 
-    public DecorationBuilder setDividerColor(@ColorRes int dividerColor) {
+    public DecorationBuilder setDividerColor(int dividerColor) {
         this.mDividerColor = dividerColor;
         return this;
     }

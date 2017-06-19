@@ -12,14 +12,17 @@ import java.util.List;
  */
 public class TestBean implements Serializable{
 
-    public List<String> list;
+    public List<itemInfoBean> list;
     public int type;
-
-    public List<String> getList() {
+   public String  imgUrl="http://pic.sogou.com/d?query=%CD%BC%C6%AC%B4%F3%C8%AB%CE%A8%C3%C0&st=255&mode=255&did=16#did15";
+    public String itemId="cs";
+    public String status="1";
+    public String itemName="测试";
+    public List<itemInfoBean> getList() {
         return list;
     }
 
-    public void setList(List<String> list) {
+    public void setList(List<itemInfoBean> list) {
         this.list = list;
     }
 

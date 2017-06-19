@@ -69,6 +69,13 @@
         android:text="CollapsingToobar"
         android:onClick="onClick"
         />
+    <Button
+        android:id="@+id/bt9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RecycleView"
+        android:onClick="onClick"
+        />
 </LinearLayout>
 
 

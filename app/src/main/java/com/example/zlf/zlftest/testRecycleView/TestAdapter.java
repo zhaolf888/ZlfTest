@@ -33,19 +33,16 @@ public class TestAdapter extends  MyBaseRecyclerAdapter<TestBean> {
     @Override
     protected void onInitViewHolder(MyBaseRecyclerAdapter.InnerBaseViewHolder holder, int viewType) {
         ItemLineartHolder lineartHolder = null;
+          holder.getTag();
         switch (viewType) {
             case    TYPE1:
-//                lineartHolder = new FlashSaleView(holder.itemView);
+                lineartHolder = new FlashSaleView(holder.itemView,1);
                 break;
             case TYPE2:
-//                lineartHolder = new PicklesView(holder.itemView,
-//                        R.drawable.seasoning_preferred,
-//                        R.color.pickles_view_title);
+                lineartHolder = new FlashSaleView(holder.itemView,2);
                 break;
             case TYPE3:
-//                lineartHolder = new FineDryCargoView(holder.itemView,
-//                        R.drawable.green_vegetables,
-//                        viewType);
+                lineartHolder = new FlashSaleView(holder.itemView,3);
             default:
                 break;
         }
@@ -54,7 +51,16 @@ public class TestAdapter extends  MyBaseRecyclerAdapter<TestBean> {
 
 
     @Override
-    public void convert(MyBaseRecyclerAdapter.InnerBaseViewHolder holder, TestBean s, int position, int itemType) {
-
+    public void convert(MyBaseRecyclerAdapter.InnerBaseViewHolder holder, TestBean list, int position, int itemType) {
+        ItemLineartHolder tag = (ItemLineartHolder) holder.getTag();
+        switch (itemType) {
+            case TYPE1://FlashSaleView
+            case TYPE2://PreSaleView
+            case TYPE3://RushShopView
+                tag.onRefresh(list);
+                break;
+            default:
+                break;
+        }
     }
 }

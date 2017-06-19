@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.example.zlf.zlftest.testRecycleView.TestRecycleViewActivity;
 import com.zlf.zlfviewutils.FlowLayout;
 import com.zlf.zlfviewutils.LoadingDialog;
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     Intent intent;
-    @OnClick({R.id.bt1,R.id.bt2,R.id.bt3,R.id.bt4,R.id.bt5,R.id.bt6,R.id.bt7,R.id.bt8})
+    @OnClick({R.id.bt1,R.id.bt2,R.id.bt3,R.id.bt4,R.id.bt5,R.id.bt6,R.id.bt7,R.id.bt8,R.id.bt9})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -59,6 +60,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.bt8:
                 intent = new Intent(MainActivity.this,CollapsingToobarActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt9:
+                intent = new Intent(MainActivity.this,TestRecycleViewActivity.class);
                 startActivity(intent);
                 break;
 
