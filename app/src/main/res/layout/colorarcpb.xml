@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.example.zlf.zlftest.ColorArcProgressBar
+        android:id="@+id/health_bar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        app:back_color="@android:color/darker_gray"
+        app:back_width="10dp"
+        app:front_color1="#FF0000"
+        app:front_color2="#FF7F00"
+        app:front_color3="#FFFF00"
+        app:front_color4="#00FF00"
+        app:front_color5="#00FFFF"
+        app:front_color6="#0000FF"
+        app:front_color7="#8B00FF"
+        app:front_width="13dp"
+        app:is_need_content="true"
+        app:is_need_unit="true"
+        app:max_value="100"
+        app:string_unit=""
+        app:is_need_title="true"
+        app:string_title="今日步数"
+        app:total_engle="270" />
+
+
+
+    <com.example.zlf.zlftest.ColorArcProgressBar
+        android:id="@+id/health_bar2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        app:back_color="#fff888"
+        app:back_width="15dp"
+        app:front_color1="#FF0000"
+        app:front_color2="#FF7F00"
+        app:front_color3="#FFFF00"
+        app:front_color4="#00FF00"
+        app:front_color5="#00FFFF"
+        app:front_color6="#0000FF"
+        app:front_color7="#8B00FF"
+        app:front_width="13dp"
+        app:is_need_content="true"
+        app:is_need_unit="true"
+        app:max_value="100"
+        app:string_unit=""
+        app:is_need_title="true"
+        app:string_title="今日步数"
+        app:total_engle="180" />
+
+
+</LinearLayout>

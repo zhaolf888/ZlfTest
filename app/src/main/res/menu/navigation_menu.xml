@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/navi_home"
+                android:icon="@mipmap/ic_launcher"
+                android:checked="true"
+                android:title="首页" />
+            <item
+                android:id="@+id/navi_notify"
+                android:icon="@mipmap/ic_launcher"
+                android:title="通知" >
+            </item>
+            <item
+                android:id="@+id/navi_blog"
+                android:icon="@mipmap/ic_launcher"
+                android:title="我的博客" />
+        </group>
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navi_4"
+            android:icon="@mipmap/ic_launcher"
+            android:title="菜单4" />
+        <item
+            android:id="@+id/navi_5"
+            android:icon="@mipmap/ic_launcher"
+            android:title="菜单5" >
+        </item>
+        <item
+            android:id="@+id/navi_6"
+            android:icon="@mipmap/ic_launcher"
+            android:title="菜单6" />
+    </group>
+
+
+    </menu>
+
+
+
